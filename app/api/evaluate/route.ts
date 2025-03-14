@@ -9,7 +9,7 @@ export async function POST(req:NextRequest) {
   }
   catch (error) {
     console.error(error);
-    return { status: 500, body: { error: "Internal Server Error" } };
+    return NextResponse.json({ status: 500, body: { error: "Internal Server Error" } });
   }
   
 }
