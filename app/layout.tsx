@@ -1,11 +1,12 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import { HeroUIProvider } from '@heroui/react'
 
 export const metadata = {
   metadataBase: new URL('https://postgres-drizzle.vercel.app'),
-  title: 'Postgres Demo with Drizzle',
+  title: 'eTriage',
   description:
-    'A simple Next.js app with a Postgres database and Drizzle as the ORM',
+    'eTriage is a web application that helps you to triage your patients.',
 }
 
 const inter = Inter({
@@ -14,14 +15,17 @@ const inter = Inter({
   display: 'swap',
 })
 
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.variable}>{children}</body>
-    </html>
+    <HeroUIProvider>
+      <html lang="en">
+        <body className={inter.variable}>{children}</body>
+      </html>
+    </HeroUIProvider>
   )
 }
