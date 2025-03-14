@@ -11,6 +11,7 @@ import StepBody from "@/components/steps/StepBody";
 import StepConditions from "@/components/steps/StepConditions";
 import StepPain from "@/components/steps/StepPain";
 import StepVitals from "@/components/steps/StepVitals";
+import StepReview from "@/components/steps/StepReview";
 
 export default function Page() {
 
@@ -115,6 +116,8 @@ export default function Page() {
               </Button>
             )}
           </div>
+
+        <StepReview data={formData} />
 
 
         </div>

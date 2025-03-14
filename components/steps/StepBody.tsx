@@ -26,6 +26,7 @@ export default function StepBody({ data, onChange }: StepAttendanceProps) {
           <Checkbox
             color="primary"
             size="md"
+            onChange={(e) => onChange("behavingStrangely", e.target.checked)}
           >
             Patient is behaving strangely
           </Checkbox>

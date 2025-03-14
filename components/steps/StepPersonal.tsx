@@ -41,16 +41,16 @@ export default function StepPersonal({ data, onChange }: StepAttendanceProps) {
             label="Date of Birth"
             placeholder="Type your date of birth here"
             radius="sm"
-            value={data.firstName}
+            value={data.dob}
             variant="flat"
             type="date"
             classNames={{
               input: "bg-default-100",
               inputWrapper: "bg-default-100",
             }}
-            onValueChange={(value) => onChange("firstName", value)}
+            onValueChange={(value) => onChange("dob", value)}
           />
-          <RadioGroup label="Sex" orientation="horizontal" isRequired>
+          <RadioGroup label="Sex" orientation="horizontal" isRequired onChange={(e) => onChange("sex", e.target.value)}>
             <Radio value="M">Male</Radio>
             <Radio value="F">Female</Radio>
           </RadioGroup>
