@@ -13,13 +13,13 @@ export default function StepVitals({ data, onChange }: StepAttendanceProps) {
             label="Heart Rate"
             placeholder="Enter your heart rate"
             radius="sm"
-            value={data.address}
+            value={data.heartRate?.toString()}
             variant="flat"
             classNames={{
               input: "bg-default-100",
               inputWrapper: "bg-default-100",
             }}
-            onValueChange={(value) => onChange("address", value)}
+            onValueChange={(value) => onChange("heartRate", value)}
           />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Input
@@ -27,26 +27,26 @@ export default function StepVitals({ data, onChange }: StepAttendanceProps) {
             label="Blood Pressure"
             placeholder="Systolic"
             radius="sm"
-            value={data.address}
+            value={data.systolicBloodPressure?.toString()}
             variant="flat"
             classNames={{
               input: "bg-default-100",
               inputWrapper: "bg-default-100",
             }}
-            onValueChange={(value) => onChange("address", value)}
+            onValueChange={(value) => onChange("systolicBloodPressure", value)}
           />
           <Input
             isRequired
             label="Blood Pressure"
             placeholder="Diaostolic"
             radius="sm"
-            value={data.address}
+            value={data.diastolicBloodPressure?.toString()}
             variant="flat"
             classNames={{
               input: "bg-default-100",
               inputWrapper: "bg-default-100",
             }}
-            onValueChange={(value) => onChange("address", value)}
+            onValueChange={(value) => onChange("diastolicBloodPressure", value)}
           />
         </div>
       </div>

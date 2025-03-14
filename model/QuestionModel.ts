@@ -15,8 +15,11 @@ export interface TriageData {
 
   conditions: boolean[];
 
-  pain: number;
+  heartRate: number;
+  systolicBloodPressure: number;
+  diastolicBloodPressure: number;
 
+  pain: number;
 }
 
 export interface StepAttendanceProps {

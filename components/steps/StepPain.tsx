@@ -6,8 +6,9 @@ export default function StepPain({ data, onChange }: StepAttendanceProps) {
   const [selectedBlock, setSelectedBlock] = useState<number | null>(null); // State to track selected block
 
   const handleBlockClick = (index: number) => {
-    setSelectedBlock(index === selectedBlock ? null : index); // Toggle block size
-    onChange("pain", index); // Update pain value
+    let block = index === selectedBlock ? null : index
+    setSelectedBlock(block); // Toggle block size
+    onChange("pain", block); // Update pain value
   };
 
   return (

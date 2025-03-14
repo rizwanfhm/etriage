@@ -51,7 +51,15 @@ export default function StepReview({ data }: ReviewProps) {
       <InfoSection
         title="Conditions"
         items={[
-          { label: "Conditions", value: data.conditions.toString() || "--" }
+          { label: "Conditions", value: data.conditions?.toString() || "--" }
+        ]}
+      />
+      <InfoSection
+        title="Vitals"
+        items={[
+          { label: "Heart Rate", value: data.heartRate?.toString() || "--" },
+          { label: "Blood Pressure (Systolic)", value: data.systolicBloodPressure?.toString() || "--" },
+          { label: "Blood Pressure (Diaostolic)", value: data.diastolicBloodPressure?.toString() || "--" },
         ]}
       />
       <InfoSection

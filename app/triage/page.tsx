@@ -26,7 +26,17 @@ export default function Page() {
   ]
 
   const INITIAL_FORM_DATA: TriageData = {
-    
+    attendanceReason: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    sex: "",
+    behavingStrangely: false,
+    conditions: [],
+    heartRate: 0,
+    systolicBloodPressure: 0,
+    diastolicBloodPressure: 0,
+    pain: 0
   }
 
   const [currentStep, setCurrentStep] = useState(0);
@@ -35,19 +45,19 @@ export default function Page() {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <StepAttendance data={formData} onChange={handleChange}/>;
+        return <StepAttendance data={formData} onChange={handleChange} />;
       case 1:
-        return <StepPersonal data={formData} onChange={handleChange}/>;
+        return <StepPersonal data={formData} onChange={handleChange} />;
       case 2:
-        return <StepBody data={formData} onChange={handleChange}/>;
+        return <StepBody data={formData} onChange={handleChange} />;
       case 3:
-        return <StepConditions data={formData} onChange={handleChange}/>;
+        return <StepConditions data={formData} onChange={handleChange} />;
       case 4:
-        return <StepVitals data={formData} onChange={handleChange}/>;
+        return <StepVitals data={formData} onChange={handleChange} />;
       case 5:
-        return <StepPain data={formData} onChange={handleChange}/>;
+        return <StepPain data={formData} onChange={handleChange} />;
       case 6:
-        return <StepAbdominal data={formData} onChange={handleChange}/>;
+        return <StepAbdominal data={formData} onChange={handleChange} />;
       default:
         return <></>;
     }
@@ -66,11 +76,21 @@ export default function Page() {
   };
 
   const handleSubmit = () => {
-    console.log("Form submitted:", formData);
+
+    fetch("/api/evaluate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   };
 
   const handleChange = (key: keyof TriageData, value: any) => {
-    setFormData((prev) => ({...prev, [key]: value}));
+    setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
@@ -117,7 +137,7 @@ export default function Page() {
             )}
           </div>
 
-        <StepReview data={formData} />
+          <StepReview data={formData} />
 
 
         </div>
