@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@heroui/react": "^2.7.5",
+    "@jest/globals": "^29.7.0",
+    "@jest/types": "^29.6.3",
     "@types/ms": "^0.7.32",
     "@types/node": "20.8.3",
     "@types/react": "^19.0.0",
@@ -29,6 +31,12 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "tailwindcss": "3.3.3",
+    "ts-node": "^10.9.2",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6"
   }
 }

@@ -6,12 +6,14 @@ import { Button, Link } from "@heroui/react";
 import { useState } from "react";
 import { TriageData } from "@/model/QuestionModel";
 import StepPersonal from "@/components/steps/StepPersonal";
-import StepAbdominal from "@/components/steps/StepAbdominal";
+import StepAbdominal from "@/components/steps/StepResult";
 import StepBody from "@/components/steps/StepBody";
 import StepConditions from "@/components/steps/StepConditions";
 import StepPain from "@/components/steps/StepPain";
 import StepVitals from "@/components/steps/StepVitals";
 import StepReview from "@/components/steps/StepReview";
+import StepResult from "@/components/steps/StepResult";
+import { TriageResult } from "@/lib/triage/TriageReult";
 
 export default function Page() {
 
@@ -22,7 +24,7 @@ export default function Page() {
     { label: "Conditions" },
     { label: "Vitals" },
     { label: "Pain" },
-    { label: "Abdominal" },
+    // { label: "Abdominal" },
   ]
 
   const INITIAL_FORM_DATA: TriageData = {
@@ -41,8 +43,17 @@ export default function Page() {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [result, setResult] = useState<TriageResult | null>(null);
+  const [hasResult, setHasResult] = useState(false);
 
   const renderStep = () => {
+
+    if (result && hasResult) {
+      const {result: triageResult, evaluation} = result;
+      // setHasResult(false);
+      return <StepResult result={triageResult} evaluation={evaluation} />;
+    }
+
     switch (currentStep) {
       case 0:
         return <StepAttendance data={formData} onChange={handleChange} />;
@@ -56,8 +67,6 @@ export default function Page() {
         return <StepVitals data={formData} onChange={handleChange} />;
       case 5:
         return <StepPain data={formData} onChange={handleChange} />;
-      case 6:
-        return <StepAbdominal data={formData} onChange={handleChange} />;
       default:
         return <></>;
     }
@@ -85,7 +94,12 @@ export default function Page() {
       body: JSON.stringify(formData),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        setResult(data.body);
+        setHasResult(true);
+        renderStep();
+      })
       .catch((error) => console.error(error));
   };
 

@@ -1,11 +1,17 @@
+import { TriageEvaluatorService } from "@/lib/triage/TriageEvaluatorService";
 import { NextRequest, NextResponse } from "next/server";
+// import { TriageEvaluator } from "@/lib/triage/TriageEvaluator";
 
 export async function POST(req:NextRequest) {
   
-  const body = await req.json();
-
   try {
-    return NextResponse.json({ status: 200, body: { message: "Success" } });
+
+    const body = await req.json();
+
+    const evaluator = new TriageEvaluatorService();
+    const triageResult = await evaluator.evaluate(body);
+
+    return NextResponse.json({ status: 200, body: triageResult });
   }
   catch (error) {
     console.error(error);
