@@ -1,5 +1,5 @@
 import { TriageRequest } from "./TriageRequest";
-import { TriageResult } from "./TriageReult";
+import { TriageResult } from "./TriageResult";
 
 export interface TriageEvaluator {
 

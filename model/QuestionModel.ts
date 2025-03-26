@@ -18,6 +18,7 @@ export interface TriageData {
   heartRate: number;
   systolicBloodPressure: number;
   diastolicBloodPressure: number;
+  temperature: number;
 
   pain: number;
 }

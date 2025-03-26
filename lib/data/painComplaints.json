@@ -53,6 +53,17 @@
     {"code": "C51", "complaint": "Gastrointestinal (GI) bleeding"},
     {"code": "C52", "complaint": "Major incidents – primary"},
     {"code": "C53", "complaint": "Headache Major incidents – secondary"},
-    {"code": "C54", "complaint": "Head injury"}
+    {"code": "C54", "complaint": "Head injury"},
+    
+    {"code": "C55", "complaint": "I have vomited blood or dark vomit that had a coffee ground appearance"},
+    {"code": "C56", "complaint": "I have been passing blood from the back passage or very dark stool"},
+    {"code": "C57", "complaint": "I am possibly pregnant"},
+    {"code": "C58", "complaint": "I am more than 20 weeks pregnant and bleeding from the vagina"},
+    {"code": "C59", "complaint": "The pain in my abdomen goes to my back"},
+    {"code": "C60", "complaint": "I have been vomiting blood or very dark vomit that look like coffey ground in the last 24 hours"},
+    {"code": "C61", "complaint": "My stool is very dark almost black"},
+    {"code": "C62", "complaint": "I can’t stop vomiting. It’s almost continuous"},
+    {"code": "C63", "complaint": "My pain goes to the shoulder tip"},
+    {"code": "C64", "complaint": "I’m vomiting"}
   ]
 }

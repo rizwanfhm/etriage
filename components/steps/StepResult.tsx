@@ -1,4 +1,4 @@
-import { TriageResult } from "@/lib/triage/TriageReult";
+import { TriageResult } from "@/lib/triage/TriageResult";
 import { StepAttendanceProps } from "@/model/QuestionModel";
 import { Checkbox, Radio, RadioGroup, Select, SelectItem } from "@heroui/react";
 

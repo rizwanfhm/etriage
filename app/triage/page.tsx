@@ -13,7 +13,7 @@ import StepPain from "@/components/steps/StepPain";
 import StepVitals from "@/components/steps/StepVitals";
 import StepReview from "@/components/steps/StepReview";
 import StepResult from "@/components/steps/StepResult";
-import { TriageResult } from "@/lib/triage/TriageReult";
+import { TriageResult } from "@/lib/triage/TriageResult";
 
 export default function Page() {
 
@@ -38,6 +38,7 @@ export default function Page() {
     heartRate: 0,
     systolicBloodPressure: 0,
     diastolicBloodPressure: 0,
+    temperature: 0,
     pain: 0
   }
 
@@ -49,9 +50,9 @@ export default function Page() {
   const renderStep = () => {
 
     if (result && hasResult) {
-      const {result: triageResult, evaluation} = result;
+      const {result: triageResult, evaluation, nextStep} = result;
       // setHasResult(false);
-      return <StepResult result={triageResult} evaluation={evaluation} />;
+      return <StepResult result={triageResult} evaluation={evaluation} nextStep={nextStep} />;
     }
 
     switch (currentStep) {
