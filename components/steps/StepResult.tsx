@@ -1,8 +1,10 @@
 import { TriageResult } from "@/lib/triage/TriageResult";
-import { StepAttendanceProps } from "@/model/QuestionModel";
+import { StepAttendanceProps, StepResultProps } from "@/model/QuestionModel";
 import { Checkbox, Radio, RadioGroup, Select, SelectItem } from "@heroui/react";
 
-export default function StepResult({ result, evaluation }: TriageResult) {
+export default function StepResult({ result }: StepResultProps) {
+
+  const { result: stepResult, evaluation } = result;
 
   const resultColour = (() => {
     switch (evaluation) {

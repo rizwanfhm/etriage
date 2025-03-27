@@ -30,7 +30,7 @@ export class TriageResult {
 
   // rating
   evaluation: TriageResultEvaluation | null;
-  evaluationDetails: string | null;
+  evaluationDetails?: string | null;
   
 
   constructor(
