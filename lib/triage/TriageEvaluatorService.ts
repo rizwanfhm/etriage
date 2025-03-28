@@ -11,9 +11,16 @@ export class TriageEvaluatorService {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.RED);
     }
 
+    const missingVitals = request.heartRate == null || request.systolicBloodPressure == null || request.diastolicBloodPressure == null;
+    
     // if no vitals are set then get request them next
-    if (request.heartRate == null || request.systolicBloodPressure == null || request.diastolicBloodPressure == null) {
+    if (missingVitals && request.currentStep !== TriageResultStep.VITALS) {
       return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.VITALS);
+    }
+
+    // if there are missing vitals and on the vitals step, then return missing data
+    if (missingVitals && request.currentStep === TriageResultStep.VITALS) {
+      return new TriageResult(TriageResultStatus.MISSING_DATA, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.VITALS);
     }
 
     // if vitals are set then evaluate them
@@ -26,16 +33,6 @@ export class TriageEvaluatorService {
       return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.PAIN);
     }
 
-    const pain = request?.pain || 0;
-
-    if (pain >= 0) {
-      return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.RED);
-    }
-
-    // default to BLUE
-    if (pain === 0) {
-      return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.BLUE);
-    }
 
     const adultAbdominalPain = new AdultAbdominalPain();
     const evaluation = await adultAbdominalPain.evaluate(request);
@@ -44,7 +41,7 @@ export class TriageEvaluatorService {
   }
 
   private evaluateVitals(request: TriageRequest): boolean{
-    if (request.heartRate === null) {
+    if (request.heartRate == null) {
       return false;
     }
 
@@ -52,7 +49,7 @@ export class TriageEvaluatorService {
       return false
     }
 
-    if (request.systolicBloodPressure === null) {
+    if (request.systolicBloodPressure == null) {
       return false;
     }
 
@@ -60,7 +57,7 @@ export class TriageEvaluatorService {
       return false;
     }
 
-    if (request.diastolicBloodPressure === null) {
+    if (request.diastolicBloodPressure == null) {
       return false;
     }
 

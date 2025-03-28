@@ -16,10 +16,14 @@ export enum TriageResultEvaluation {
 };
 
 export enum TriageResultStep {
-  VITALS = "VITALS",
+  ADDTENDANCE = "ATTENDANCE",
+  PERSONAL = "PERSONAL",
+  BODY = "BODY",
   CONDITIONS = "CONDITIONS",
+  VITALS = "VITALS",
   PAIN = "PAIN",
-  EVALUATION = "EVALUATION"
+  RESULT = "RESULT",
+  UNKNOWN = "UNKNOWN"
 }
 
 export class TriageResult {

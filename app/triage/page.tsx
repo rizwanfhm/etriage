@@ -4,26 +4,37 @@ import RowSteps from "@/components/RowSteps";
 import StepAttendance from "@/components/steps/StepAttendance";
 import { Button, Link } from "@heroui/react";
 import { useEffect, useState } from "react";
-// import { TriageData } from "@/model/QuestionModel";
 import StepPersonal from "@/components/steps/StepPersonal";
-import StepAbdominal from "@/components/steps/StepResult";
 import StepBody from "@/components/steps/StepBody";
 import StepConditions from "@/components/steps/StepConditions";
 import StepPain from "@/components/steps/StepPain";
 import StepVitals from "@/components/steps/StepVitals";
 import StepReview from "@/components/steps/StepReview";
 import StepResult from "@/components/steps/StepResult";
-import { TriageResult } from "@/lib/triage/TriageResult";
+import { TriageResult, TriageResultStatus, TriageResultStep } from "@/lib/triage/TriageResult";
 import { TriageData } from "@/model/triage/TriageData";
 
 export default function Page() {
 
-  const STEPS = [
-    { label: "Start" },
-    { label: "Personal" },
-    { label: "Body" },
-    { label: "Conditions" },
-  ]
+  enum Steps {
+    ATTENDANCE = 0,
+    PERSONAL = 1,
+    BODY = 2,
+    CONDITIONS = 3,
+    VITALS = 4,
+    PAIN = 5,
+    RESULT = 6,
+  }
+
+  const STEP_MAPPING = new Map<Steps, string>();
+  STEP_MAPPING.set(Steps.PERSONAL, TriageResultStep.PERSONAL);
+  STEP_MAPPING.set(Steps.PERSONAL, TriageResultStep.PERSONAL);
+  STEP_MAPPING.set(Steps.BODY, TriageResultStep.BODY);
+  STEP_MAPPING.set(Steps.ATTENDANCE, TriageResultStep.ADDTENDANCE);
+  STEP_MAPPING.set(Steps.VITALS, TriageResultStep.VITALS);
+  STEP_MAPPING.set(Steps.CONDITIONS, TriageResultStep.CONDITIONS);
+  STEP_MAPPING.set(Steps.PAIN, TriageResultStep.PAIN);
+  STEP_MAPPING.set(Steps.RESULT, TriageResultStep.RESULT);
 
   const INITIAL_FORM_DATA = new TriageData();
 
@@ -31,74 +42,45 @@ export default function Page() {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [result, setResult] = useState<TriageResult | null>(null);
   const [hasResult, setHasResult] = useState(false);
-  const [completed, setCompleted] = useState(false);
+  const [steps, setSteps] = useState<number[]>([Steps.ATTENDANCE]);
 
   const renderStep = () => {
 
-    if (currentStep <= 3 && !hasResult) {
       switch (currentStep) {
-        case 0:
+        case Steps.ATTENDANCE:
           return <StepAttendance data={formData} onChange={handleChange} />;
-        case 1:
+        case Steps.PERSONAL:
           return <StepPersonal data={formData} onChange={handleChange} />;
-        case 2:
+        case Steps.BODY:
           return <StepBody data={formData} onChange={handleChange} />;
-        case 3:
+        case Steps.CONDITIONS:
           return <StepConditions data={formData} onChange={handleChange} />
-        default:
-          return <></>;
-      }
-    }
-
-    if (result && hasResult) {
-      const { result: triageResult, evaluation, nextStep } = result;
-
-      switch (triageResult) {
-        case "COMPLETE":
-          // setCompleted(true);
-          return <StepResult result={result} />;
-        case 'INPROGRESS':
-          switch (nextStep) {
-            case "VITALS":
-              return <StepVitals data={formData} onChange={handleChange} />;
-            case "PAIN":
-              return <StepPain data={formData} onChange={handleChange} />;
-            default:
-              return <></>;
+        case Steps.VITALS:
+          return <StepVitals data={formData} onChange={handleChange} />;
+        case Steps.PAIN:
+          return <StepPain data={formData} onChange={handleChange} />;
+        case Steps.RESULT:
+          if (result) {
+            return <StepResult result={result} />;
           }
+          return <></>;
         default:
           return <></>;
       }
-    }
-
 
     return <></>;
-
-    // switch (currentStep) {
-    //   case 0:
-    //     return <StepAttendance data={formData} onChange={handleChange} />;
-    //   case 1:
-    //     return <StepPersonal data={formData} onChange={handleChange} />;
-    //   case 2:
-    //     return <StepBody data={formData} onChange={handleChange} />;
-    //   case 3:
-    //     return <StepConditions data={formData} onChange={handleChange} />;
-    //   case 4:
-    //     return <StepVitals data={formData} onChange={handleChange} />;
-    //   case 5:
-    //     return <StepPain data={formData} onChange={handleChange} />;
-    //   default:
-    //     return <></>;
-    // }
   }
 
   const handleNext = () => {
-    if (currentStep < STEPS.length - 1) {
-      setCurrentStep((prev) => prev + 1);
+    if (currentStep < Steps.CONDITIONS && currentStep < Steps.RESULT) {
+      const nextStep = currentStep + 1;
+      formData.currentStep = STEP_MAPPING.get(nextStep) || TriageResultStep.UNKNOWN;
+      setFormData(formData)
+      setCurrentStep((prev) => nextStep);
+      steps.push(nextStep);
+      setSteps(steps => steps);
     }
-
-    // if on conditions the render next step based on result of evaluation
-    if (currentStep >= 3) {
+    else {
       fetch("/api/evaluate", {
         method: "POST",
         headers: {
@@ -108,19 +90,45 @@ export default function Page() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setResult(data.body);
           setHasResult(true);
-          // setCurrentStep((prev) => prev + 1);
-          // renderStep();
+
+          if (data.body.result === TriageResultStatus.COMPLETE) {
+            steps.push(Steps.RESULT);
+          }
+          else if (data.body.result !== TriageResultStatus.MISSING_DATA) {
+
+            switch (data.body.nextStep) {
+              case TriageResultStep.VITALS:
+                steps.push(Steps.VITALS);
+                break;
+              case TriageResultStep.PAIN:
+                steps.push(Steps.PAIN);
+                break;
+              default:
+                break;
+            }
+          }
+
+          const currentStep = steps[steps.length - 1];
+          formData.currentStep = STEP_MAPPING.get(currentStep) || TriageResultStep.UNKNOWN;
+          setCurrentStep(prev => currentStep);
+          setSteps(steps => steps);
+          setFormData(formData)
+
         })
         .catch((error) => console.error(error));
     }
   };
 
   const handlePrevious = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
+    if (currentStep > Steps.ATTENDANCE && steps.length > 1) {
+      steps.pop();  // remove the last step
+      const currentStep = steps[steps.length - 1];
+      formData.currentStep = STEP_MAPPING.get(currentStep) || TriageResultStep.UNKNOWN;
+      setCurrentStep((prev) => currentStep);      
+      setSteps(steps => steps);
+      setFormData(formData)
     }
   };
 
@@ -150,7 +158,9 @@ export default function Page() {
             </div>
           </div> */}
 
-          <div>{currentStep}</div>
+          <div>currentStep: {currentStep}</div>
+          <div>steps: {steps.map(s => s)}</div>
+          <div>step: {formData.currentStep}</div>
 
           <div className="min-h-[400px]">{renderStep()}</div>
 

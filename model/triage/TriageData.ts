@@ -1,4 +1,6 @@
-export class TriageData {
+import { TriageRequest } from '@/lib/triage/TriageRequest';
+
+export class TriageData implements TriageRequest {
   attendanceReason!: string;
 
   firstName!: string;
@@ -8,7 +10,7 @@ export class TriageData {
 
   behavingStrangely!: boolean;
 
-  conditions!: boolean[];
+  conditions!: string[];
 
   heartRate!: number;
   systolicBloodPressure!: number;
@@ -17,4 +19,7 @@ export class TriageData {
 
   pain!: number;
 
+  presentingComplaints!: string[];
+  
+  currentStep!: string;
 }

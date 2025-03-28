@@ -51,7 +51,7 @@ describe('TriageEvaluatorService', () => {
 
   });
 
-  it('should return RED when any conditions are set', async () => {
+  it('should return RED when any CONDITIONS are set', async () => {
     const request = {
       conditions: ["1"],
       presentingComplaints: []
@@ -87,6 +87,18 @@ describe('TriageEvaluatorService', () => {
       expect(result.evaluation).toEqual(evaluation);
     });
 
+    it('should return MISSING_DATA if vitals are not set and on the vitals step', async () => {
+      const request = {
+        condtions: [],
+        heartRate: null,
+        currentStep: TriageResultStep.VITALS
+      } as unknown as TriageRequest;
+
+      const service = new TriageEvaluatorService();
+      const result = await service.evaluate(request);
+
+      expect(result.result).toEqual(TriageResultStatus.MISSING_DATA);
+    });
     
 
   });
