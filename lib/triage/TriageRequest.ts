@@ -1,4 +1,6 @@
-export interface TriageRequest {
+import { TriageStep } from "@/model/triage/TraigeStep";
+
+export interface TriageRequest extends TriageStep {
 
   firstName: string;
   lastName: string;
@@ -17,6 +19,4 @@ export interface TriageRequest {
   pain: number | null;
   
   presentingComplaints: string[];
-
-  currentStep: string
 }

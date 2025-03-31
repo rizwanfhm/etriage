@@ -1,6 +1,9 @@
 import { TriageRequest } from '@/lib/triage/TriageRequest';
+import { TriageDetails } from './TriageDetails';
+import { TriageStep } from './TraigeStep';
 
-export class TriageData implements TriageRequest {
+export class TriageData implements TriageRequest, TriageDetails {
+  
   attendanceReason!: string;
 
   firstName!: string;
@@ -20,6 +23,9 @@ export class TriageData implements TriageRequest {
   pain!: number;
 
   presentingComplaints!: string[];
-  
+
+  bowelHabits!: string[];
+  urinarySymptoms!: string[];
+
   currentStep!: string;
 }

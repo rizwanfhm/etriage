@@ -13,6 +13,8 @@ import StepReview from "@/components/steps/StepReview";
 import StepResult from "@/components/steps/StepResult";
 import { TriageResult, TriageResultStatus, TriageResultStep } from "@/lib/triage/TriageResult";
 import { TriageData } from "@/model/triage/TriageData";
+import StepBowel from "@/components/steps/StepBowel";
+import StepUrinary from "@/components/steps/StepUrinary";
 
 export default function Page() {
 
@@ -24,6 +26,8 @@ export default function Page() {
     VITALS = 4,
     PAIN = 5,
     RESULT = 6,
+    BOWEL = 7,
+    URINARY = 8,
   }
 
   const STEP_MAPPING = new Map<Steps, string>();
@@ -35,6 +39,8 @@ export default function Page() {
   STEP_MAPPING.set(Steps.CONDITIONS, TriageResultStep.CONDITIONS);
   STEP_MAPPING.set(Steps.PAIN, TriageResultStep.PAIN);
   STEP_MAPPING.set(Steps.RESULT, TriageResultStep.RESULT);
+  STEP_MAPPING.set(Steps.BOWEL, TriageResultStep.BOWEL);
+  STEP_MAPPING.set(Steps.URINARY, TriageResultStep.URINARY);
 
   const INITIAL_FORM_DATA = new TriageData();
 
@@ -64,6 +70,10 @@ export default function Page() {
             return <StepResult result={result} />;
           }
           return <></>;
+        case Steps.BOWEL:
+          return <StepBowel data={formData} onChange={handleChange} />;
+        case Steps.URINARY:
+          return <StepUrinary data={formData} onChange={handleChange} />;
         default:
           return <></>;
       }
@@ -80,7 +90,38 @@ export default function Page() {
       steps.push(nextStep);
       setSteps(steps => steps);
     }
-    else {
+    else if (currentStep >= Steps.RESULT) {
+      fetch("/api/details", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          
+          switch (data.body.nextStep) {
+            case TriageResultStep.BOWEL:
+              steps.push(Steps.BOWEL);
+              break;
+            case TriageResultStep.URINARY: 
+              steps.push(Steps.URINARY);
+              break;
+            default:
+              break;
+          }
+          
+          const currentStep = steps[steps.length - 1];
+          formData.currentStep = STEP_MAPPING.get(currentStep) || TriageResultStep.UNKNOWN;
+          setCurrentStep(prev => currentStep);
+          setSteps(steps => steps);
+          setFormData(formData)
+
+        })
+        .catch((error) => console.error(error));
+    }
+    else if (currentStep <= Steps.RESULT) {
       fetch("/api/evaluate", {
         method: "POST",
         headers: {

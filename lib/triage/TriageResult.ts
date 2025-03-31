@@ -1,9 +1,8 @@
-import exp from "constants";
-
 export enum TriageResultStatus { 
   COMPLETE = "COMPLETE",
   INPROGRESS = "INPROGRESS",
-  MISSING_DATA = "MISSING_DATA"
+  MISSING_DATA = "MISSING_DATA",
+  DETAILS = "DETAILS",
 };
 
 export enum TriageResultEvaluation {
@@ -23,6 +22,8 @@ export enum TriageResultStep {
   VITALS = "VITALS",
   PAIN = "PAIN",
   RESULT = "RESULT",
+  BOWEL = "BOWEL",
+  URINARY = "URINARY",
   UNKNOWN = "UNKNOWN"
 }
 

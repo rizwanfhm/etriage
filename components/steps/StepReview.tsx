@@ -68,6 +68,18 @@ export default function StepReview({ data }: ReviewProps) {
           { label: "Pain", value: data.pain?.toLocaleString() || "--" }
         ]}
       />
+      <InfoSection
+        title="Bowel Habits"
+        items={[
+          { label: "Bowel Habits", value: data.bowelHabits?.toString() || "--" }
+        ]}
+      />
+      <InfoSection
+        title="Urinary Symptoms"
+        items={[
+          { label: "Uniary Symptoms", value: data.urinarySymptoms?.toString() || "--" }
+        ]}
+      />
     </div>
   )
 }
