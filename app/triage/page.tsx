@@ -15,6 +15,7 @@ import { TriageResult, TriageResultStatus, TriageResultStep } from "@/lib/triage
 import { TriageData } from "@/model/triage/TriageData";
 import StepBowel from "@/components/steps/StepBowel";
 import StepUrinary from "@/components/steps/StepUrinary";
+import StepGynaecology from "@/components/steps/StepGynaecology";
 
 export default function Page() {
 
@@ -28,6 +29,7 @@ export default function Page() {
     RESULT = 6,
     BOWEL = 7,
     URINARY = 8,
+    GYNAECOLOGY = 9,
   }
 
   const STEP_MAPPING = new Map<Steps, string>();
@@ -41,6 +43,7 @@ export default function Page() {
   STEP_MAPPING.set(Steps.RESULT, TriageResultStep.RESULT);
   STEP_MAPPING.set(Steps.BOWEL, TriageResultStep.BOWEL);
   STEP_MAPPING.set(Steps.URINARY, TriageResultStep.URINARY);
+  STEP_MAPPING.set(Steps.GYNAECOLOGY, TriageResultStep.GYNAECOLOGY);
 
   const INITIAL_FORM_DATA = new TriageData();
 
@@ -74,6 +77,8 @@ export default function Page() {
           return <StepBowel data={formData} onChange={handleChange} />;
         case Steps.URINARY:
           return <StepUrinary data={formData} onChange={handleChange} />;
+        case Steps.GYNAECOLOGY:
+          return <StepGynaecology data={formData} onChange={handleChange} />;
         default:
           return <></>;
       }
@@ -107,6 +112,9 @@ export default function Page() {
               break;
             case TriageResultStep.URINARY: 
               steps.push(Steps.URINARY);
+              break;
+            case TriageResultStep.GYNAECOLOGY:
+              steps.push(Steps.GYNAECOLOGY);
               break;
             default:
               break;

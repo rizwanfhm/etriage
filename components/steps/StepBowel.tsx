@@ -1,8 +1,8 @@
-import { StepAttendanceProps } from "@/model/QuestionModel";
+import { StepProps } from "@/model/QuestionModel";
 import { Checkbox, CheckboxGroup } from "@heroui/react";
 import { useState } from "react";
 
-export default function StepBowel({ data, onChange }: StepAttendanceProps) {
+export default function StepBowel({ data, onChange }: StepProps) {
 
   const [selectedConditions, setSelectedConditions] = useState<string[]>(data.bowelHabits);
 

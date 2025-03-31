@@ -1,8 +1,8 @@
-import { StepAttendanceProps } from "@/model/QuestionModel";
+import { StepProps } from "@/model/QuestionModel";
 import { useState } from "react"; // Added useState
 import { Checkbox, Radio, RadioGroup, Select, SelectItem } from "@heroui/react";
 
-export default function StepPain({ data, onChange }: StepAttendanceProps) {
+export default function StepPain({ data, onChange }: StepProps) {
   const [selectedBlock, setSelectedBlock] = useState<number | null>(data.pain); // State to track selected block
 
   const handleBlockClick = (index: number) => {

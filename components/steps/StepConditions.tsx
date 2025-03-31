@@ -1,8 +1,8 @@
-import { StepAttendanceProps } from "@/model/QuestionModel";
+import { StepProps } from "@/model/QuestionModel";
 import { Checkbox, CheckboxGroup, Radio, RadioGroup, Select, SelectItem } from "@heroui/react";
 import { useState } from "react";
 
-export default function StepConditions({ data, onChange }: StepAttendanceProps) {
+export default function StepConditions({ data, onChange }: StepProps) {
 
   const [selectedConditions, setSelectedConditions] = useState<string[]>(data.conditions);
 

@@ -1,5 +1,5 @@
 import { TriageDetails } from "@/model/triage/TriageDetails";
-import { TraiageDetailsService } from "./TriageDetailsService";
+import { TriageDetailsService } from "./TriageDetailsService";
 import { TriageResultStep, TriageResultStatus } from "./TriageResult";
 
 describe('TriageDetailsService', () => {
@@ -11,7 +11,7 @@ describe('TriageDetailsService', () => {
         currentStep: TriageResultStep.RESULT,
       } as unknown as TriageDetails;
 
-      const service = new TraiageDetailsService();
+      const service = new TriageDetailsService();
       const result = await service.captureDetails(request);
 
       expect(result.result).toEqual(TriageResultStatus.DETAILS);
@@ -23,7 +23,7 @@ describe('TriageDetailsService', () => {
         currentStep: TriageResultStep.BOWEL,
       } as unknown as TriageDetails;
 
-      const service = new TraiageDetailsService();
+      const service = new TriageDetailsService();
       const result = await service.captureDetails(request);
 
       expect(result.result).toEqual(TriageResultStatus.DETAILS);

@@ -80,6 +80,13 @@ export default function StepReview({ data }: ReviewProps) {
           { label: "Uniary Symptoms", value: data.urinarySymptoms?.toString() || "--" }
         ]}
       />
+      <InfoSection
+        title="Gynaecology"
+        items={[
+          { label: "Last period", value: data.lastPeriod || "--" },
+          { label: "Heavy bleeding", value: data.heavyBleeding.toString() || "--" },
+        ]}
+      />
     </div>
   )
 }

@@ -1,7 +1,7 @@
-import { StepAttendanceProps } from "@/model/QuestionModel";
+import { StepProps } from "@/model/QuestionModel";
 import { Checkbox, Input, Radio, RadioGroup, Select, SelectItem } from "@heroui/react";
 
-export default function StepPersonal({ data, onChange }: StepAttendanceProps) {
+export default function StepPersonal({ data, onChange }: StepProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="space-y-2">

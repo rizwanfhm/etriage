@@ -24,6 +24,7 @@ export enum TriageResultStep {
   RESULT = "RESULT",
   BOWEL = "BOWEL",
   URINARY = "URINARY",
+  GYNAECOLOGY = "GYNAECOLOGY",
   UNKNOWN = "UNKNOWN"
 }
 
