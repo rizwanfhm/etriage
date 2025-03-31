@@ -3,7 +3,7 @@ import { useState } from "react"; // Added useState
 import { Checkbox, Radio, RadioGroup, Select, SelectItem } from "@heroui/react";
 
 export default function StepPain({ data, onChange }: StepAttendanceProps) {
-  const [selectedBlock, setSelectedBlock] = useState<number | null>(null); // State to track selected block
+  const [selectedBlock, setSelectedBlock] = useState<number | null>(data.pain); // State to track selected block
 
   const handleBlockClick = (index: number) => {
     let block = index === selectedBlock ? null : index

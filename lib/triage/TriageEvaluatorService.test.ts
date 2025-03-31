@@ -64,7 +64,7 @@ describe('TriageEvaluatorService', () => {
     expect(result.evaluation).toEqual(TriageResultEvaluation.RED);
   });
 
-  describe('Vitals', () => {
+  describe('vitals', () => {
     it.each([
       ["Heart rate above range", 120, 120, 70, TriageResultStatus.COMPLETE, TriageResultEvaluation.RED],
       ["Heart rate below range", 40, 120, 70, TriageResultStatus.COMPLETE, TriageResultEvaluation.RED],

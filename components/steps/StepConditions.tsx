@@ -5,7 +5,6 @@ import { useState } from "react";
 export default function StepConditions({ data, onChange }: StepAttendanceProps) {
 
   const [selectedConditions, setSelectedConditions] = useState<string[]>(data.conditions);
-  // const [selectedConditions, setSelectedConditions] = useState<Set<string>>(new Set(data.conditions));
 
   return (
     <div className="flex flex-col gap-6">

@@ -29,7 +29,7 @@ export class TriageEvaluatorService {
     }    
 
     // not got to pain yet
-    if (request.pain == null) {
+    if (request.pain == null || request.currentStep === TriageResultStep.VITALS) {
       return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.PAIN);
     }
 
