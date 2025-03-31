@@ -16,6 +16,7 @@ import { TriageData } from "@/model/triage/TriageData";
 import StepBowel from "@/components/steps/StepBowel";
 import StepUrinary from "@/components/steps/StepUrinary";
 import StepGynaecology from "@/components/steps/StepGynaecology";
+import StepFemaleHistory from "@/components/steps/StepFemaleHistory";
 
 export default function Page() {
 
@@ -88,6 +89,8 @@ export default function Page() {
           return <StepUrinary data={formData} onChange={handleChange} />;
         case Steps.GYNAECOLOGY:
           return <StepGynaecology data={formData} onChange={handleChange} />;
+        case Steps.FEMALE_HISTORY:
+          return <StepFemaleHistory data={formData} onChange={handleChange} />;
         default:
           return <></>;
       }
@@ -124,6 +127,9 @@ export default function Page() {
               break;
             case TriageResultStep.GYNAECOLOGY:
               steps.push(Steps.GYNAECOLOGY);
+              break;
+            case TriageResultStep.FEMALE_HISTORY:
+              steps.push(Steps.FEMALE_HISTORY);
               break;
             default:
               break;

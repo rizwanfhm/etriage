@@ -87,6 +87,12 @@ export default function StepReview({ data }: ReviewProps) {
           { label: "Heavy bleeding", value: data.gynaecologyConditions?.toString() || "--" },
         ]}
       />
+      <InfoSection
+        title="Female History"
+        items={[          
+          { label: "Female history", value: data.femaleHistoryConditions?.toString() || "--" },
+        ]}
+      />
     </div>
   )
 }

@@ -71,6 +71,20 @@
     {"code": "F3", "complaint": "No period for a long time than usual"},
     {"code": "F4", "complaint": "Period lasting longer than usual"},
     {"code": "F5", "complaint": "Unusual Discharge from the vagina"},
-    {"code": "F6", "complaint": "Irregular periods"}
+    {"code": "F6", "complaint": "Irregular periods"},
+
+    {"code": "F7", "complaint": "PCOS"},
+    {"code": "F8", "complaint": "Ovarian problems"},
+    {"code": "F9", "complaint": "Endometriosis"},
+    {"code": "F10", "complaint": "Irregular period"},
+    {"code": "F11", "complaint": "Very heavy period"},
+    {"code": "F12", "complaint": "Painful period"},
+    {"code": "F13", "complaint": "Ectopic pregnancy"},
+    {"code": "F14", "complaint": "Miscarriage"}
+
+
+
+
+
   ]
 }
