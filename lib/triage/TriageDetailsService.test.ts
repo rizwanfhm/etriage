@@ -1,6 +1,7 @@
 import { TriageDetails } from "@/model/triage/TriageDetails";
 import { TriageDetailsService } from "./TriageDetailsService";
 import { TriageResultStep, TriageResultStatus } from "./TriageResult";
+import { TriageSex } from "@/model/triage/TriagePersonalDetails";
 
 describe('TriageDetailsService', () => {
 
@@ -28,6 +29,45 @@ describe('TriageDetailsService', () => {
 
       expect(result.result).toEqual(TriageResultStatus.DETAILS);
       expect(result.nextStep).toEqual(TriageResultStep.URINARY);
+    });
+
+    it('should return GYNAECOLOGY after URINARY if female', async () => {
+      const request = {
+        sex: TriageSex.FEMALE,
+        currentStep: TriageResultStep.URINARY,
+      } as unknown as TriageDetails;
+
+      const service = new TriageDetailsService();
+      const result = await service.captureDetails(request);
+
+      expect(result.result).toEqual(TriageResultStatus.DETAILS);
+      expect(result.nextStep).toEqual(TriageResultStep.GYNAECOLOGY);
+    });
+
+    it(('should return FEMALE_HISTORY after GYNAECOLOGY if female'), async () => {
+      const request = {
+        sex: TriageSex.FEMALE,
+        currentStep: TriageResultStep.GYNAECOLOGY,
+      } as unknown as TriageDetails;
+
+      const service = new TriageDetailsService();
+      const result = await service.captureDetails(request);
+
+      expect(result.result).toEqual(TriageResultStatus.DETAILS);
+      expect(result.nextStep).toEqual(TriageResultStep.FEMALE_HISTORY);
+    });
+
+    it('should return MALE_HISTORY after URINARY if male', async () => {
+      const request = {
+        sex: TriageSex.MALE,
+        currentStep: TriageResultStep.URINARY,
+      } as unknown as TriageDetails;
+
+      const service = new TriageDetailsService();
+      const result = await service.captureDetails(request);
+
+      expect(result.result).toEqual(TriageResultStatus.DETAILS);
+      expect(result.nextStep).toEqual(TriageResultStep.MALE_HISTORY);
     });
 
   });

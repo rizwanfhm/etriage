@@ -1,9 +1,9 @@
 import { TriageRequest } from '@/lib/triage/TriageRequest';
 import { TriageDetails } from './TriageDetails';
-import { TriageGynaecology } from './TriageGynaecology';
 import { TriagePersonalDetails } from './TriagePersonalDetails';
 
-export class TriageData implements TriagePersonalDetails, TriageRequest, TriageDetails, TriageGynaecology {
+export class TriageData implements TriagePersonalDetails, TriageRequest, TriageDetails {
+  
 
   currentStep!: string;
 
@@ -31,9 +31,7 @@ export class TriageData implements TriagePersonalDetails, TriageRequest, TriageD
   urinarySymptoms!: string[];
 
   lastPeriod!: string;
-  heavyBleeding!: string;
-  painfulPeriod!: string;
-  latePeriod!: string;
-  longerPeriod!: string;
-  unusualDischage!: string;
+  gynaecologyConditions!: string[];
+  femaleHistoryConditions!: string[];
+  maleHistoryConditions!: string[];
 }

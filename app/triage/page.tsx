@@ -30,6 +30,11 @@ export default function Page() {
     BOWEL = 7,
     URINARY = 8,
     GYNAECOLOGY = 9,
+    FEMALE_HISTORY = 10,
+    MALE_HISTORY = 11,
+    MEDICAL_HISTORY = 12,
+    MEDICATION = 13,
+    OTHER = 14,
   }
 
   const STEP_MAPPING = new Map<Steps, string>();
@@ -44,6 +49,10 @@ export default function Page() {
   STEP_MAPPING.set(Steps.BOWEL, TriageResultStep.BOWEL);
   STEP_MAPPING.set(Steps.URINARY, TriageResultStep.URINARY);
   STEP_MAPPING.set(Steps.GYNAECOLOGY, TriageResultStep.GYNAECOLOGY);
+  STEP_MAPPING.set(Steps.FEMALE_HISTORY, TriageResultStep.FEMALE_HISTORY);
+  STEP_MAPPING.set(Steps.MALE_HISTORY, TriageResultStep.MALE_HISTORY);
+  STEP_MAPPING.set(Steps.MEDICAL_HISTORY, TriageResultStep.MEDICAL_HISTORY);
+  STEP_MAPPING.set(Steps.MEDICATION, TriageResultStep.MEDICATION);
 
   const INITIAL_FORM_DATA = new TriageData();
 

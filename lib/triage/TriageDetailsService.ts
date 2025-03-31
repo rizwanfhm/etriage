@@ -17,6 +17,14 @@ export class TriageDetailsService {
       return new TriageResult(TriageResultStatus.DETAILS, undefined, undefined, TriageResultStep.GYNAECOLOGY);
     }
 
+    if (request.sex === TriageSex.FEMALE && request.currentStep === TriageResultStep.GYNAECOLOGY) {
+      return new TriageResult(TriageResultStatus.DETAILS, undefined, undefined, TriageResultStep.FEMALE_HISTORY);
+    }
+
+    if (request.sex === TriageSex.MALE && request.currentStep === TriageResultStep.URINARY) {
+      return new TriageResult(TriageResultStatus.DETAILS, undefined, undefined, TriageResultStep.MALE_HISTORY);
+    }
+
     return new TriageResult(TriageResultStatus.COMPLETE);
   }
 }

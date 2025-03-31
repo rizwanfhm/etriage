@@ -64,6 +64,13 @@
     {"code": "C61", "complaint": "My stool is very dark almost black"},
     {"code": "C62", "complaint": "I can’t stop vomiting. It’s almost continuous"},
     {"code": "C63", "complaint": "My pain goes to the shoulder tip"},
-    {"code": "C64", "complaint": "I’m vomiting"}
+    {"code": "C64", "complaint": "I’m vomiting"},
+
+    {"code": "F1", "complaint": "Very heavy bleeding"},
+    {"code": "F2", "complaint": "Very painful period"},
+    {"code": "F3", "complaint": "No period for a long time than usual"},
+    {"code": "F4", "complaint": "Period lasting longer than usual"},
+    {"code": "F5", "complaint": "Unusual Discharge from the vagina"},
+    {"code": "F6", "complaint": "Irregular periods"}
   ]
 }
