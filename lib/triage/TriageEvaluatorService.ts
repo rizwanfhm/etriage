@@ -11,12 +11,11 @@ export class TriageEvaluatorService {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.RED);
     }
 
-    const missingVitals = request.heartRate == null || request.systolicBloodPressure == null || request.diastolicBloodPressure == null;
-    
-    // if no vitals are set then get request them next
-    if (missingVitals && request.currentStep !== TriageResultStep.VITALS) {
+    if (request.currentStep === TriageResultStep.CONDITIONS) {
       return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.VITALS);
     }
+
+    const missingVitals = request.heartRate == null || request.systolicBloodPressure == null || request.diastolicBloodPressure == null;
 
     // if there are missing vitals and on the vitals step, then return missing data
     if (missingVitals && request.currentStep === TriageResultStep.VITALS) {
@@ -28,11 +27,9 @@ export class TriageEvaluatorService {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.RED);
     }    
 
-    // not got to pain yet
-    if (request.pain == null || request.currentStep === TriageResultStep.VITALS) {
+    if (request.currentStep === TriageResultStep.VITALS) {
       return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.PAIN);
     }
-
 
     const adultAbdominalPain = new AdultAbdominalPain();
     const evaluation = await adultAbdominalPain.evaluate(request);

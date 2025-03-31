@@ -10,7 +10,8 @@ describe('TriageEvaluatorService', () => {
     it('should return the VITALS step when no conditions are set', async () => {
       const request = {
         conditions: [],
-        presentingComplaints: []
+        presentingComplaints: [],
+        currentStep: TriageResultStep.CONDITIONS,
       } as unknown as TriageRequest;
   
       const service = new TriageEvaluatorService();
@@ -25,7 +26,25 @@ describe('TriageEvaluatorService', () => {
         conditions: [],
         heartRate: null,
         systolicBloodPressure: null,
-        diastolicBloodPressure: null
+        diastolicBloodPressure: null,
+        currentStep: TriageResultStep.CONDITIONS,
+      } as unknown as TriageRequest;
+  
+      const service = new TriageEvaluatorService();
+      const result = await service.evaluate(request);
+  
+      expect(result.result).toEqual(TriageResultStatus.INPROGRESS);
+      expect(result.nextStep).toEqual(TriageResultStep.VITALS);
+    });
+
+
+    it('should return VITALS when no conditions are set and vitals are set', async () => {
+      const request = {
+        conditions: [],
+        heartRate: 70,
+        systolicBloodPressure: 120,
+        diastolicBloodPressure: 70,
+        currentStep: TriageResultStep.CONDITIONS,
       } as unknown as TriageRequest;
   
       const service = new TriageEvaluatorService();
@@ -39,7 +58,8 @@ describe('TriageEvaluatorService', () => {
       const request = {
         heartRate: 70,
         systolicBloodPressure: 120,
-        diastolicBloodPressure: 70
+        diastolicBloodPressure: 70,
+        currentStep: TriageResultStep.VITALS,
       } as unknown as TriageRequest;
 
       const service = new TriageEvaluatorService();
@@ -77,7 +97,8 @@ describe('TriageEvaluatorService', () => {
       const request = {
         heartRate: heartRate,
         systolicBloodPressure: systolicBloodPressure,
-        diastolicBloodPressure: diastolicBloodPressure
+        diastolicBloodPressure: diastolicBloodPressure,
+        currentStep: TriageResultStep.VITALS,
       } as unknown as TriageRequest;
 
       const service = new TriageEvaluatorService();
