@@ -24,7 +24,6 @@ export default function StepFemaleHistory({ data, onChange }: StepProps) {
         <h2 className="text-2xl font-bold">Female History</h2>
 
         <CheckboxGroup label="Do any of the following apply?" onValueChange={setSelectedConditions} onChange={(value) => onChange("femaleHistoryConditions", value)} value={selectedConditions}>
-
           {sourceConditions.map((condition) => (
             <Checkbox value={condition.code}>{condition.condition}</Checkbox>
           ))}

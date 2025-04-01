@@ -19,6 +19,7 @@ import StepGynaecology from "@/components/steps/StepGynaecology";
 import StepFemaleHistory from "@/components/steps/StepFemaleHistory";
 import StepMaleHistory from "@/components/steps/StepMaleHistory";
 import StepHistory from "@/components/steps/StepMedicalHistory";
+import StepMedication from "@/components/steps/StepMedication";
 
 export default function Page() {
 
@@ -97,6 +98,8 @@ export default function Page() {
           return <StepMaleHistory data={formData} onChange={handleChange} />;
         case Steps.MEDICAL_HISTORY:
           return <StepHistory data={formData} onChange={handleChange} />;
+        case Steps.MEDICATION:
+          return <StepMedication data={formData} onChange={handleChange} />;
         default:
           return <></>;
       }
@@ -142,6 +145,9 @@ export default function Page() {
               break;
             case TriageResultStep.MEDICAL_HISTORY:
               steps.push(Steps.MEDICAL_HISTORY);
+            case TriageResultStep.MEDICATION:
+              steps.push(Steps.MEDICATION);
+              break;
             default:
               break;
           }

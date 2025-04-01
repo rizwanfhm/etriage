@@ -29,6 +29,10 @@ export class TriageDetailsService {
       return new TriageResult(TriageResultStatus.DETAILS, undefined, undefined, TriageResultStep.MEDICAL_HISTORY);
     }
 
+    if (request.currentStep === TriageResultStep.MEDICAL_HISTORY) {
+      return new TriageResult(TriageResultStatus.DETAILS, undefined, undefined, TriageResultStep.MEDICATION);
+    }
+
     return new TriageResult(TriageResultStatus.COMPLETE);
   }
 }

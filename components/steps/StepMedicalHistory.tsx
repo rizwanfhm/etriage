@@ -15,7 +15,7 @@ export default function StepMedicalHistory({ data, onChange }: StepProps) {
       setSourceConditions(conditions);
     };
 
-    fetchConditions();    
+    fetchConditions();
   });
 
   return (

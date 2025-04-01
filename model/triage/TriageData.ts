@@ -34,4 +34,6 @@ export class TriageData implements TriagePersonalDetails, TriageRequest, TriageD
   femaleHistoryConditions!: string[];
   maleHistoryConditions!: string[];
   medicalHistoryConditions!: string[];
+
+  medication!: string;
 }

@@ -98,5 +98,17 @@ describe('TriageDetailsService', () => {
     expect(result.nextStep).toEqual(TriageResultStep.MEDICAL_HISTORY);
   });
 
+  it('should return MEDICATION after MEDICAL_HISTORY', async () => {
+    const request = {
+      currentStep: TriageResultStep.MEDICAL_HISTORY,
+    } as unknown as TriageDetails;
+
+    const service = new TriageDetailsService();
+    const result = await service.captureDetails(request);
+
+    expect(result.result).toEqual(TriageResultStatus.DETAILS);
+    expect(result.nextStep).toEqual(TriageResultStep.MEDICATION);
+  });
+
 
 });
