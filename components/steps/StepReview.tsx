@@ -89,8 +89,20 @@ export default function StepReview({ data }: ReviewProps) {
       />
       <InfoSection
         title="Female History"
-        items={[          
+        items={[
           { label: "Female history", value: data.femaleHistoryConditions?.toString() || "--" },
+        ]}
+      />
+      <InfoSection
+        title="Male History"
+        items={[
+          { label: "Male history", value: data.maleHistoryConditions?.toString() || "--" },
+        ]}
+      />
+      <InfoSection
+        title="Medical History"
+        items={[
+          { label: "Male history", value: data.medicalHistoryConditions?.toString() || "--" },
         ]}
       />
     </div>

@@ -3,7 +3,6 @@ import { TriageDetails } from './TriageDetails';
 import { TriagePersonalDetails } from './TriagePersonalDetails';
 
 export class TriageData implements TriagePersonalDetails, TriageRequest, TriageDetails {
-  
 
   currentStep!: string;
 
@@ -34,4 +33,5 @@ export class TriageData implements TriagePersonalDetails, TriageRequest, TriageD
   gynaecologyConditions!: string[];
   femaleHistoryConditions!: string[];
   maleHistoryConditions!: string[];
+  medicalHistoryConditions!: string[];
 }

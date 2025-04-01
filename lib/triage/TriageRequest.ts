@@ -1,4 +1,4 @@
-import { TriageStep } from "@/model/triage/TraigeStep";
+import { TriageStep } from "@/model/triage/TriageStep";
 
 export interface TriageRequest extends TriageStep {
 

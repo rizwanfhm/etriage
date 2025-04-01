@@ -25,6 +25,10 @@ export class TriageDetailsService {
       return new TriageResult(TriageResultStatus.DETAILS, undefined, undefined, TriageResultStep.MALE_HISTORY);
     }
 
+    if (request.currentStep === TriageResultStep.FEMALE_HISTORY || request.currentStep === TriageResultStep.MALE_HISTORY) {
+      return new TriageResult(TriageResultStatus.DETAILS, undefined, undefined, TriageResultStep.MEDICAL_HISTORY);
+    }
+
     return new TriageResult(TriageResultStatus.COMPLETE);
   }
 }

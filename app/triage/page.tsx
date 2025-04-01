@@ -17,6 +17,8 @@ import StepBowel from "@/components/steps/StepBowel";
 import StepUrinary from "@/components/steps/StepUrinary";
 import StepGynaecology from "@/components/steps/StepGynaecology";
 import StepFemaleHistory from "@/components/steps/StepFemaleHistory";
+import StepMaleHistory from "@/components/steps/StepMaleHistory";
+import StepHistory from "@/components/steps/StepMedicalHistory";
 
 export default function Page() {
 
@@ -91,6 +93,10 @@ export default function Page() {
           return <StepGynaecology data={formData} onChange={handleChange} />;
         case Steps.FEMALE_HISTORY:
           return <StepFemaleHistory data={formData} onChange={handleChange} />;
+        case Steps.MALE_HISTORY:
+          return <StepMaleHistory data={formData} onChange={handleChange} />;
+        case Steps.MEDICAL_HISTORY:
+          return <StepHistory data={formData} onChange={handleChange} />;
         default:
           return <></>;
       }
@@ -131,10 +137,15 @@ export default function Page() {
             case TriageResultStep.FEMALE_HISTORY:
               steps.push(Steps.FEMALE_HISTORY);
               break;
+            case TriageResultStep.MALE_HISTORY: 
+              steps.push(Steps.MALE_HISTORY);
+              break;
+            case TriageResultStep.MEDICAL_HISTORY:
+              steps.push(Steps.MEDICAL_HISTORY);
             default:
               break;
           }
-          
+         
           const currentStep = steps[steps.length - 1];
           formData.currentStep = STEP_MAPPING.get(currentStep) || TriageResultStep.UNKNOWN;
           setCurrentStep(prev => currentStep);
