@@ -22,9 +22,7 @@ export default function StepMedicalHistory({ data, onChange }: StepProps) {
     <div className="flex flex-col gap-6">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">Medical History</h2>
-
         <CheckboxGroup label="Do any of the following apply?" onValueChange={setSelectedConditions} onChange={(value) => onChange("medicalHistoryConditions", value)} value={selectedConditions}>
-
           {sourceConditions.map((condition) => (
             <Checkbox value={condition.code}>{condition.condition}</Checkbox>
           ))}
