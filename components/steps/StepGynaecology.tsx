@@ -1,10 +1,22 @@
+import { TriageCondition } from "@/lib/data/TriageCondition";
+import { TriageConditions } from "@/lib/data/TriageConditions";
 import { StepProps } from "@/model/QuestionModel";
-import { Checkbox, CheckboxGroup, Input, Radio, RadioGroup } from "@heroui/react";
-import { useState } from "react";
+import { Checkbox, CheckboxGroup, Input } from "@heroui/react";
+import { useEffect, useState } from "react";
 
 export default function StepGynaecology({ data, onChange }: StepProps) {
 
   const [selectedConditions, setSelectedConditions] = useState<string[]>(data.gynaecologyConditions);
+  const [sourceConditions, setSourceConditions] = useState<TriageCondition[]>([]);
+
+  useEffect(() => {
+    const fetchConditions = async () => {
+      const conditions = await TriageConditions.matchConditions("G.");
+      setSourceConditions(conditions);
+    };
+
+    fetchConditions();
+  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -30,14 +42,10 @@ export default function StepGynaecology({ data, onChange }: StepProps) {
           </div>
 
           <CheckboxGroup label="Do any of the following apply?" onValueChange={setSelectedConditions} onChange={(value) => onChange("gynaecologyConditions", value)} value={selectedConditions}>
-            <Checkbox value="F1">Very heavy bleeding</Checkbox>
-            <Checkbox value="F2">Very painful period</Checkbox>
-            <Checkbox value="F3">No period for a long time than usual</Checkbox>
-            <Checkbox value="F4">Period lasting longer than usual</Checkbox>
-            <Checkbox value="F5">Unusual Discharge from the vagina</Checkbox>
-            <Checkbox value="F6">Irregular periods</Checkbox>
+            {sourceConditions.map((condition) => (
+              <Checkbox value={condition.code}>{condition.condition}</Checkbox>
+            ))}
           </CheckboxGroup>
-
 
         </div>
       </div>
