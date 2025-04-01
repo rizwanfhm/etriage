@@ -25,12 +25,11 @@ describe('TriageConditions', () => {
       json: async () => mockResponse
     });
 
-    const codes = ["C1", "F1", "M.1", "H1"];
-    const expectedConditions = [
-      new TriageCondition("C1", "Abdominal pain in adults"),
-      new TriageCondition("F1", "Very heavy bleeding"),
+    const codes = ["F.1", "M.1", "H.1"];
+    const expectedConditions = [      
+      new TriageCondition("F.1", "PCOS"),
       new TriageCondition("M.1", "Enlarged prostate"),
-      new TriageCondition("H1", "Bowel cancer"),
+      new TriageCondition("H.1", "Bowel cancer"),
     ];
 
     const service = new TriageConditions();
@@ -64,6 +63,28 @@ describe('TriageConditions', () => {
     const result = await TriageConditions.matchConditions(prefix);
 
     expect(result).toEqual(expectedConditions);
+  });
+
+  it('should return presenting complaints', async () => {
+
+    const filePath = path.join(process.cwd(), 'lib/data/conditions.json');
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const conditionsData = JSON.parse(fileContent);
+    const mockResponse = {
+      status: 200,
+      body: conditionsData
+    };
+
+    (fetch as jest.Mock).mockResolvedValue({
+      json: async () => mockResponse
+    });
+
+    const complaints = await TriageConditions.presentingComplaints();
+    expect(complaints).toBeDefined();
+    expect(complaints.length).toBeGreaterThan(0);
+    expect(complaints[0]).toBeInstanceOf(TriageCondition);
+    expect(complaints[0].code).toBeDefined();
+    expect(complaints[0].condition).toBeDefined();
   });
 
 });

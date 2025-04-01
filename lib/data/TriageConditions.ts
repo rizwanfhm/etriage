@@ -68,4 +68,22 @@ export class TriageConditions {
       });
   }
 
+  public static async presentingComplaints(): Promise<TriageCondition[]> {
+    return await fetch("/api/data")
+      .then((res) => res.json())
+      .then((data) => { 
+        const complaintsData = data.body;
+        const result: TriageCondition[] = []
+
+        complaintsData?.presentingComplaints?.body.forEach(
+          (item: { code: string; condition: string }) => {            
+              const condition = new TriageCondition(item.code, item.condition);
+              result.push(condition);            
+          }
+        );
+
+        return result;
+      });
+  }
+
 }

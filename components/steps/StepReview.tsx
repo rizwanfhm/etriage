@@ -43,6 +43,12 @@ export default function StepReview({ data }: ReviewProps) {
         ]}
       />
       <InfoSection
+        title="Presenting Complaints"
+        items={[
+          { label: "Presenting Complaints", value: (data.presentingComplaints?.toString() || "--") }
+        ]}
+      />
+      <InfoSection
         title="Body"
         items={[
           { label: "Behaving Stragely", value: (data.behavingStrangely ? "Y" : "N") }

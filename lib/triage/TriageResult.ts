@@ -11,7 +11,8 @@ export enum TriageResultEvaluation {
   YELLOW = "YELLOW",
   GREEN = "GREEN",
   BLUE = "BLUE",
-  UNKNOWN = "UNKNOWN"
+  UNKNOWN = "UNKNOWN",
+  NOT_APPLICABLE = "NOT_APPLICABLE",
 };
 
 export enum TriageResultStep {

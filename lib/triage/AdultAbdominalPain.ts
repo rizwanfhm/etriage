@@ -1,8 +1,9 @@
 import { TriageRequest } from './TriageRequest';
 import { TriageEvaluator } from './TriageEvaluator';
 import { TriageResult, TriageResultEvaluation, TriageResultStatus } from './TriageResult';
+import path from 'path';
+import fs from "fs";
 
-import { promises as fs } from 'fs';
 
 export class AdultAbdominalPain implements TriageEvaluator {
 
@@ -13,18 +14,17 @@ export class AdultAbdominalPain implements TriageEvaluator {
   
   constructor() {
     this.RED = new Set();
-    this.ORANGE = new Set(["C55", "C56", "C58", "C59"]);
-    this.YELLOW = new Set(["C60", "C61", "C62", "C57", "C63"]);
-    this.GREEN = new Set(["C64"]);
+    this.ORANGE = new Set(["PQ.1", "PQ.2", "PQ.4", "PQ.5"]);
+    this.YELLOW = new Set(["PQ.6", "PQ.7", "PQ.3", "PQ.9"]);
+    this.GREEN = new Set(["PQ.10"]);
   }
 
   async evaluate(request: TriageRequest): Promise<TriageResult> {
 
-    // const complaintsFile = await fs.readFile(process.cwd() + '/lib/data/painComplaints.json', 'utf-8');
-    // const complaints = JSON.parse(complaintsFile);
-
-    
-
+    if (!this.isApplicable(request)) {
+      return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.NOT_APPLICABLE);
+    }
+ 
     if (this.evaluateOrange(request)) {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.ORANGE);
     }
@@ -76,6 +76,20 @@ export class AdultAbdominalPain implements TriageEvaluator {
     });
 
     return match;
+  }
+
+  private isApplicable(request: TriageRequest): boolean {
+
+    // TODO: static load
+    const filePath = path.join(process.cwd(), 'lib/data/conditions.json');
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const conditionsData = JSON.parse(fileContent);
+
+    const painIds = conditionsData?.presentingComplaints.body
+      .filter((item: { code: string, isPain: boolean }) => item.isPain)
+      .map((item: { code: string }) => item.code) || [];
+
+    return request?.presentingComplaints?.some(complaint => painIds.includes(complaint));
   }
 
 }
