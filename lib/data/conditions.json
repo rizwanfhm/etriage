@@ -66,6 +66,12 @@
     {"code": "C.63", "condition": "My pain goes to the shoulder tip"},
     {"code": "C.64", "condition": "I’m vomiting"},
 
+    {"code": "P.1", "condition": "Drowsy, unconscious, hard to rouse"},
+    {"code": "P.2", "condition": "Bleeding that is not rapidly controlled by the application of sustained direct pressure, and in which blood continues to flow heavily or soak through large dressings quickly"},
+    {"code": "P.3", "condition": "Blocked airway, not able to breathe, unusual noisy breathing, unable to catch your breath, drooling"},
+    {"code": "P.4", "condition": "Feel very hot, pale, sweating profusely"},
+    {"code": "P.5", "condition": "Currently fitting"},
+
     {"code": "B.1", "condition": "Diarrhoea"},
     {"code": "B.2", "condition": "Constipation"},
     {"code": "B.3", "condition": "Alternating between both constipation and diarrhoea"},
