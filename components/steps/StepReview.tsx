@@ -49,6 +49,12 @@ export default function StepReview({ data }: ReviewProps) {
         ]}
       />
       <InfoSection
+        title="Presenting Complaints Questions"
+        items={[
+          { label: "Presenting Questions", value: (data.presentingComplaintsQuestions?.toString() || "--") }
+        ]}
+      />
+      <InfoSection
         title="Body"
         items={[
           { label: "Behaving Stragely", value: (data.behavingStrangely ? "Y" : "N") }
@@ -64,6 +70,7 @@ export default function StepReview({ data }: ReviewProps) {
         title="Vitals"
         items={[
           { label: "Heart Rate", value: data.heartRate?.toString() || "--" },
+          { label: "Temperature", value: data.temperature?.toString() || "--" },
           { label: "Blood Pressure (Systolic)", value: data.systolicBloodPressure?.toString() || "--" },
           { label: "Blood Pressure (Diaostolic)", value: data.diastolicBloodPressure?.toString() || "--" },
         ]}

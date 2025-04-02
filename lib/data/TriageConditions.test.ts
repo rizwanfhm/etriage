@@ -87,4 +87,27 @@ describe('TriageConditions', () => {
     expect(complaints[0].condition).toBeDefined();
   });
 
+  it('should return presenting complaints questions', async () => {
+
+    const filePath = path.join(process.cwd(), 'lib/data/conditions.json');
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const conditionsData = JSON.parse(fileContent);
+    const mockResponse = {
+      status: 200,
+      body: conditionsData
+    };
+
+    (fetch as jest.Mock).mockResolvedValue({
+      json: async () => mockResponse
+    });
+
+    const questions = await TriageConditions.presentingComplaintsQuestions(["PQ.1", "PQ.2", "PQ.10"]);
+    expect(questions).toBeDefined();
+    expect(questions.length).toBe(3);
+    expect(questions[0]).toBeInstanceOf(TriageCondition);
+    expect(questions[0].code).toBe("PQ.1");
+    expect(questions[1].code).toBe("PQ.2");
+    expect(questions[2].code).toBe("PQ.10");
+  });
+
 });

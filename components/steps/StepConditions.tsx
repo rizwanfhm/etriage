@@ -1,7 +1,7 @@
 import { TriageCondition } from "@/lib/data/TriageCondition";
 import { TriageConditions } from "@/lib/data/TriageConditions";
 import { StepProps } from "@/model/QuestionModel";
-import { Checkbox, CheckboxGroup, Radio, RadioGroup, Select } from "@heroui/react";
+import { Checkbox, CheckboxGroup } from "@heroui/react";
 import { useEffect, useState } from "react";
 
 export default function StepConditions({ data, onChange }: StepProps) {
@@ -25,7 +25,7 @@ export default function StepConditions({ data, onChange }: StepProps) {
 
         <CheckboxGroup label="Do any of the following apply?" onValueChange={setSelectedConditions} onChange={(value) => onChange("conditions", value)} value={selectedConditions}>
           {sourceConditions.map((condition) => (
-            <Checkbox value={condition.code}>{condition.condition}</Checkbox>
+            <Checkbox key={condition.code} value={condition.code}>{condition.condition}</Checkbox>
           ))}
         </CheckboxGroup>
 

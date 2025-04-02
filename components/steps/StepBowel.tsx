@@ -25,7 +25,7 @@ export default function StepBowel({ data, onChange }: StepProps) {
 
         <CheckboxGroup label="Do any of the following apply?" onValueChange={setSelectedConditions} onChange={(value) => onChange("bowelHabits", value)} value={selectedConditions}>
           {sourceConditions.map((condition) => (
-            <Checkbox value={condition.code}>{condition.condition}</Checkbox>
+            <Checkbox key={condition.code} value={condition.code}>{condition.condition}</Checkbox>
           ))}
         </CheckboxGroup>
       </div>

@@ -27,14 +27,24 @@ export class TriageEvaluatorService {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.RED);
     }    
 
-    if (request.currentStep === TriageResultStep.VITALS) {
-      return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.PAIN);
+    switch (request.currentStep) {
+      case TriageResultStep.VITALS:
+        return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.PAIN);        
+      case TriageResultStep.PAIN:
+        if (AdultAbdominalPain.isApplicable(request)) {
+          return new TriageResult(TriageResultStatus.INPROGRESS, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.ABDOMINAL_PAIN);        
+        }
+        else {
+          return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.UNKNOWN);
+        }
+      case TriageResultStep.PRESENTING_QUESTIONS:
+        const adultAbdominalPain = new AdultAbdominalPain();
+        const evaluation = await adultAbdominalPain.evaluate(request);
+        return evaluation;
+      default:
+        return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.UNKNOWN, undefined, TriageResultStep.UNKNOWN);
     }
 
-    const adultAbdominalPain = new AdultAbdominalPain();
-    const evaluation = await adultAbdominalPain.evaluate(request);
-
-    return evaluation
   }
 
   private evaluateVitals(request: TriageRequest): boolean{

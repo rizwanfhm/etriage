@@ -8,7 +8,6 @@ export class TriageConditions {
       .then((res) => res.json())
       .then((data) => {
         const conditionsData = data.body;
-
         const conditionMap: Map<string, TriageCondition> = new Map<string, TriageCondition>();
 
         conditionsData?.conditions.forEach(
@@ -39,7 +38,6 @@ export class TriageConditions {
       .then((res) => res.json())
       .then((data) => {
         const conditionsData = data.body;
-
         const conditionMap: Map<string, TriageCondition> = new Map<string, TriageCondition>();
 
         conditionsData?.conditions.forEach(
@@ -79,6 +77,28 @@ export class TriageConditions {
           (item: { code: string; condition: string }) => {            
               const condition = new TriageCondition(item.code, item.condition);
               result.push(condition);            
+          }
+        );
+
+        return result;
+      });
+  }
+
+  public static async presentingComplaintsQuestions(questions: string[]): Promise<TriageCondition[]> {
+    return await fetch("/api/data")
+      .then((res) => res.json())
+      .then((data) => {
+        const conditionsData = data.body;
+        const result: TriageCondition[] = [];
+        const qns = new Set<string>(questions);
+
+        conditionsData?.presentingComplaints?.questions.forEach(
+          (item: { code: string; condition: string }) => {
+
+            if (qns.has(item.code)) {
+              const condition = new TriageCondition(item.code, item.condition);
+              result.push(condition);
+            }
           }
         );
 

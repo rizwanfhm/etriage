@@ -69,6 +69,40 @@ describe('TriageEvaluatorService', () => {
       expect(result.nextStep).toEqual(TriageResultStep.PAIN);
     });
 
+    it('should return the ABDOMINAL_PAIN step if after pain is set and meets criteria', async () => {
+      const request = {
+        presentingComplaints: ["P.1"],
+        conditions: [],
+        heartRate: 70,
+        systolicBloodPressure: 120,
+        diastolicBloodPressure: 70,
+        currentStep: TriageResultStep.PAIN,
+      } as unknown as TriageRequest;
+
+      const service = new TriageEvaluatorService();
+      const result = await service.evaluate(request);
+
+      expect(result.result).toEqual(TriageResultStatus.INPROGRESS);
+      expect(result.nextStep).toEqual(TriageResultStep.ABDOMINAL_PAIN);
+    });
+
+    it('should return the RESULT step if after pain is set and does not meet criteria', async () => {
+      const request = {
+        presentingComplaints: [],
+        conditions: [],
+        heartRate: 70,
+        systolicBloodPressure: 120,
+        diastolicBloodPressure: 70,
+        currentStep: TriageResultStep.PAIN,
+      } as unknown as TriageRequest;
+
+      const service = new TriageEvaluatorService();
+      const result = await service.evaluate(request);
+      
+      expect(result.result).toEqual(TriageResultStatus.COMPLETE);
+      expect(result.nextStep).toEqual(TriageResultStep.RESULT);
+    });
+
   });
 
   it('should return RED when any CONDITIONS are set', async () => {

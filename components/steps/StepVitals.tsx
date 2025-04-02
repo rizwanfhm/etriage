@@ -7,7 +7,8 @@ export default function StepVitals({ data, onChange }: StepProps) {
       <div className="space-y-2">
         <h2 className="text-2xl font-bold">Vitals</h2>
         <p className="text-default-500 text-large">Enter your measurements</p>
-        
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Input
             isRequired
             label="Heart Rate"
@@ -21,7 +22,22 @@ export default function StepVitals({ data, onChange }: StepProps) {
             }}
             onValueChange={(value) => onChange("heartRate", value)}
           />
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Input
+            isRequired
+            label="Temperature"
+            placeholder="Enter your temperature"
+            radius="sm"
+            value={data.temperature?.toString()}
+            variant="flat"
+            classNames={{
+              input: "bg-default-100",
+              inputWrapper: "bg-default-100",
+            }}
+            onValueChange={(value) => onChange("temperature", value)}
+          />
+
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Input
             isRequired
             label="Blood Pressure"

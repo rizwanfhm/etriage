@@ -21,7 +21,7 @@ export class AdultAbdominalPain implements TriageEvaluator {
 
   async evaluate(request: TriageRequest): Promise<TriageResult> {
 
-    if (!this.isApplicable(request)) {
+    if (!AdultAbdominalPain.isApplicable(request)) {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.NOT_APPLICABLE);
     }
  
@@ -31,7 +31,7 @@ export class AdultAbdominalPain implements TriageEvaluator {
     else if (this.evaluateYellow(request)) {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.YELLOW);
     }
-    else if (this.evaluateComplaints(new Set(request.conditions), this.GREEN)) {
+    else if (this.evaluateComplaints(new Set(request.presentingComplaintsQuestions), this.GREEN)) {
       return new TriageResult(TriageResultStatus.COMPLETE, TriageResultEvaluation.GREEN);
     }
 
@@ -42,7 +42,7 @@ export class AdultAbdominalPain implements TriageEvaluator {
     const pain = request?.pain || 0;
     const temp = request?.temperature || 0;
 
-    return this.evaluateComplaints(new Set(request.conditions), this.ORANGE) &&
+    return this.evaluateComplaints(new Set(request.presentingComplaintsQuestions), this.ORANGE) &&
       pain >= 8 &&  //  severe pain
       temp >= 39;   //  very hot
   }
@@ -51,7 +51,7 @@ export class AdultAbdominalPain implements TriageEvaluator {
     const pain = request?.pain || 0;
     const temp = request?.temperature || 0;
 
-    return this.evaluateComplaints(new Set(request.conditions), this.YELLOW) &&
+    return this.evaluateComplaints(new Set(request.presentingComplaintsQuestions), this.YELLOW) &&
       pain >= 5 && pain <= 7 && // moderate pain
       temp >= 38; // hot
   }
@@ -59,7 +59,7 @@ export class AdultAbdominalPain implements TriageEvaluator {
   private evaluateGreen(request: TriageRequest): boolean {
     const pain = request?.pain || 0;
 
-    return this.evaluateComplaints(new Set(request.conditions), this.GREEN) &&
+    return this.evaluateComplaints(new Set(request.presentingComplaintsQuestions), this.GREEN) &&
       pain >= 0 && pain <= 4; // mild pain
   }
 
@@ -78,7 +78,7 @@ export class AdultAbdominalPain implements TriageEvaluator {
     return match;
   }
 
-  private isApplicable(request: TriageRequest): boolean {
+  public static isApplicable(request: TriageRequest): boolean {
 
     // TODO: static load
     const filePath = path.join(process.cwd(), 'lib/data/conditions.json');

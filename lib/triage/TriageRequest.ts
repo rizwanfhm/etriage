@@ -14,4 +14,5 @@ export interface TriageRequest extends TriageStep {
   pain: number | null;
   
   presentingComplaints: string[];
+  presentingComplaintsQuestions: string[];
 }

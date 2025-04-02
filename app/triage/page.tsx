@@ -20,31 +20,34 @@ import StepFemaleHistory from "@/components/steps/StepFemaleHistory";
 import StepMaleHistory from "@/components/steps/StepMaleHistory";
 import StepHistory from "@/components/steps/StepMedicalHistory";
 import StepMedication from "@/components/steps/StepMedication";
+import StepPresentingComplaintsQuestions from "@/components/steps/StepPresentingComplaintsQuestions";
 
 export default function Page() {
 
   enum Steps {
     ATTENDANCE = 0,
     PERSONAL = 1,
-    BODY = 2,
+    PRESENTING_COMPLAINTS = 2,
     CONDITIONS = 3,
     VITALS = 4,
     PAIN = 5,
-    RESULT = 6,
-    BOWEL = 7,
-    URINARY = 8,
-    GYNAECOLOGY = 9,
-    FEMALE_HISTORY = 10,
-    MALE_HISTORY = 11,
-    MEDICAL_HISTORY = 12,
-    MEDICATION = 13,
-    OTHER = 14,
+    PRESENTING_QUESTIONS = 6,
+    RESULT = 7,
+    BOWEL = 8,
+    URINARY = 9,
+    GYNAECOLOGY = 10,
+    FEMALE_HISTORY = 11,
+    MALE_HISTORY = 12,
+    MEDICAL_HISTORY = 13,
+    MEDICATION = 14,
+    OTHER = 15,
   }
 
+  // map the displayed step to the state in the service
   const STEP_MAPPING = new Map<Steps, string>();
   STEP_MAPPING.set(Steps.PERSONAL, TriageResultStep.PERSONAL);
-  STEP_MAPPING.set(Steps.PERSONAL, TriageResultStep.PERSONAL);
-  STEP_MAPPING.set(Steps.BODY, TriageResultStep.BODY);
+  STEP_MAPPING.set(Steps.PRESENTING_COMPLAINTS, TriageResultStep.PRESENTING_COMPLAINTS);
+  STEP_MAPPING.set(Steps.PRESENTING_QUESTIONS, TriageResultStep.PRESENTING_QUESTIONS);
   STEP_MAPPING.set(Steps.ATTENDANCE, TriageResultStep.ADDTENDANCE);
   STEP_MAPPING.set(Steps.VITALS, TriageResultStep.VITALS);
   STEP_MAPPING.set(Steps.CONDITIONS, TriageResultStep.CONDITIONS);
@@ -63,46 +66,49 @@ export default function Page() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [result, setResult] = useState<TriageResult | null>(null);
-  const [hasResult, setHasResult] = useState(false);
   const [steps, setSteps] = useState<number[]>([Steps.ATTENDANCE]);
+  const [triageResultStep, setTriageResultStep] = useState<TriageResultStep>(TriageResultStep.UNKNOWN);
 
   const renderStep = () => {
 
-      switch (currentStep) {
-        case Steps.ATTENDANCE:
-          return <StepAttendance data={formData} onChange={handleChange} />;
-        case Steps.PERSONAL:
-          return <StepPersonal data={formData} onChange={handleChange} />;
-        case Steps.BODY:
-          return <StepBody data={formData} onChange={handleChange} />;
-        case Steps.CONDITIONS:
-          return <StepConditions data={formData} onChange={handleChange} />
-        case Steps.VITALS:
-          return <StepVitals data={formData} onChange={handleChange} />;
-        case Steps.PAIN:
-          return <StepPain data={formData} onChange={handleChange} />;
-        case Steps.RESULT:
-          if (result) {
-            return <StepResult result={result} />;
-          }
-          return <></>;
-        case Steps.BOWEL:
-          return <StepBowel data={formData} onChange={handleChange} />;
-        case Steps.URINARY:
-          return <StepUrinary data={formData} onChange={handleChange} />;
-        case Steps.GYNAECOLOGY:
-          return <StepGynaecology data={formData} onChange={handleChange} />;
-        case Steps.FEMALE_HISTORY:
-          return <StepFemaleHistory data={formData} onChange={handleChange} />;
-        case Steps.MALE_HISTORY:
-          return <StepMaleHistory data={formData} onChange={handleChange} />;
-        case Steps.MEDICAL_HISTORY:
-          return <StepHistory data={formData} onChange={handleChange} />;
-        case Steps.MEDICATION:
-          return <StepMedication data={formData} onChange={handleChange} />;
-        default:
-          return <></>;
-      }
+    // render the component based on the current step
+    switch (currentStep) {
+      case Steps.ATTENDANCE:
+        return <StepAttendance data={formData} onChange={handleChange} />;
+      case Steps.PERSONAL:
+        return <StepPersonal data={formData} onChange={handleChange} />;
+      case Steps.PRESENTING_COMPLAINTS:
+        return <StepBody data={formData} onChange={handleChange} />;
+      case Steps.PRESENTING_QUESTIONS:
+        return <StepPresentingComplaintsQuestions data={formData} onChange={handleChange} triageStep={triageResultStep} />;
+      case Steps.CONDITIONS:
+        return <StepConditions data={formData} onChange={handleChange} />
+      case Steps.VITALS:
+        return <StepVitals data={formData} onChange={handleChange} />;
+      case Steps.PAIN:
+        return <StepPain data={formData} onChange={handleChange} />;
+      case Steps.RESULT:
+        if (result) {
+          return <StepResult result={result} />;
+        }
+        return <></>;
+      case Steps.BOWEL:
+        return <StepBowel data={formData} onChange={handleChange} />;
+      case Steps.URINARY:
+        return <StepUrinary data={formData} onChange={handleChange} />;
+      case Steps.GYNAECOLOGY:
+        return <StepGynaecology data={formData} onChange={handleChange} />;
+      case Steps.FEMALE_HISTORY:
+        return <StepFemaleHistory data={formData} onChange={handleChange} />;
+      case Steps.MALE_HISTORY:
+        return <StepMaleHistory data={formData} onChange={handleChange} />;
+      case Steps.MEDICAL_HISTORY:
+        return <StepHistory data={formData} onChange={handleChange} />;
+      case Steps.MEDICATION:
+        return <StepMedication data={formData} onChange={handleChange} />;
+      default:
+        return <></>;
+    }
 
     return <></>;
   }
@@ -126,12 +132,12 @@ export default function Page() {
       })
         .then((res) => res.json())
         .then((data) => {
-          
+
           switch (data.body.nextStep) {
             case TriageResultStep.BOWEL:
               steps.push(Steps.BOWEL);
               break;
-            case TriageResultStep.URINARY: 
+            case TriageResultStep.URINARY:
               steps.push(Steps.URINARY);
               break;
             case TriageResultStep.GYNAECOLOGY:
@@ -140,7 +146,7 @@ export default function Page() {
             case TriageResultStep.FEMALE_HISTORY:
               steps.push(Steps.FEMALE_HISTORY);
               break;
-            case TriageResultStep.MALE_HISTORY: 
+            case TriageResultStep.MALE_HISTORY:
               steps.push(Steps.MALE_HISTORY);
               break;
             case TriageResultStep.MEDICAL_HISTORY:
@@ -151,7 +157,7 @@ export default function Page() {
             default:
               break;
           }
-         
+
           const currentStep = steps[steps.length - 1];
           formData.currentStep = STEP_MAPPING.get(currentStep) || TriageResultStep.UNKNOWN;
           setCurrentStep(prev => currentStep);
@@ -171,8 +177,7 @@ export default function Page() {
       })
         .then((res) => res.json())
         .then((data) => {
-          setResult(data.body);
-          setHasResult(true);
+          setResult(data.body);         
 
           if (data.body.result === TriageResultStatus.COMPLETE) {
             steps.push(Steps.RESULT);
@@ -185,6 +190,10 @@ export default function Page() {
                 break;
               case TriageResultStep.PAIN:
                 steps.push(Steps.PAIN);
+                break;
+              case TriageResultStep.ABDOMINAL_PAIN:
+                setTriageResultStep(TriageResultStep.ABDOMINAL_PAIN);
+                steps.push(Steps.PRESENTING_QUESTIONS);
                 break;
               default:
                 break;
@@ -207,7 +216,7 @@ export default function Page() {
       steps.pop();  // remove the last step
       const currentStep = steps[steps.length - 1];
       formData.currentStep = STEP_MAPPING.get(currentStep) || TriageResultStep.UNKNOWN;
-      setCurrentStep((prev) => currentStep);      
+      setCurrentStep((prev) => currentStep);
       setSteps(steps => steps);
       setFormData(formData)
     }

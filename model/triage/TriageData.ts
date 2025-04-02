@@ -25,6 +25,7 @@ export class TriageData implements TriagePersonalDetails, TriageRequest, TriageD
   pain!: number;
 
   presentingComplaints!: string[];
+  presentingComplaintsQuestions!: string[];
 
   bowelHabits!: string[];
   urinarySymptoms!: string[];

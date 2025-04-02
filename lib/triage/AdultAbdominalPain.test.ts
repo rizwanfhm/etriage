@@ -38,7 +38,7 @@ describe('abdominal pain', () => {
     const request = {
       presentingComplaints: ["P.17"],
       pain: 8,
-      conditions: ["PQ.1", "PQ.2", "PQ.4", "PQ.5"],
+      presentingComplaintsQuestions: ["PQ.1", "PQ.2", "PQ.4", "PQ.5"],
       temperature: 39
     } as unknown as TriageRequest;
 
@@ -53,7 +53,7 @@ describe('abdominal pain', () => {
     const request = {
       presentingComplaints: ["P.17"],
       pain: 5,
-      conditions: ["PQ.6", "PQ.7", "PQ.3", "PQ.9"],
+      presentingComplaintsQuestions: ["PQ.6", "PQ.7", "PQ.3", "PQ.9"],
       temperature: 38
     } as unknown as TriageRequest;
 
@@ -68,7 +68,7 @@ describe('abdominal pain', () => {
     const request = {
       presentingComplaints: ["P.17"],
       pain: 0,
-      conditions: ["PQ.10"],
+      presentingComplaintsQuestions: ["PQ.10"],
       temperature: 37
     } as unknown as TriageRequest;
 
